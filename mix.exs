@@ -60,7 +60,8 @@ defmodule Suchteam.MixProject do
       {:bandit, "~> 1.5"},
       {:oban, "~> 2.17"},
       {:redix, "~> 1.5"},
-      {:websockex, "~> 0.4.3"}
+      {:websockex, "~> 0.4.3"},
+      {:bcrypt_elixir, "~> 3.0"}
     ]
   end
 
