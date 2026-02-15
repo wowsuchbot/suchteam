@@ -1,0 +1,36 @@
+<.header>
+  Create New Organization
+  <:subtitle>Organizations allow you to manage teams and collaborate with others</:subtitle>
+</.header>
+
+<div class="mt-8 max-w-md">
+  <.simple_form :let={f} for={%{}} as={:organization} action={~p"/organizations"} method="post">
+    <.input 
+      field={f[:name]} 
+      type="text" 
+      label="Organization Name" 
+      placeholder="Acme Inc"
+      required 
+    />
+    
+    <.input 
+      field={f[:slug]} 
+      type="text" 
+      label="Organization Slug" 
+      placeholder="acme-inc"
+      help="Used in URLs. Lowercase letters, numbers, and dashes only."
+    />
+
+    <:actions>
+      <.button phx-disable-with="Creating..." class="w-full">
+        Create Organization
+      </.button>
+    </:actions>
+  </.simple_form>
+
+  <div class="mt-4">
+    <.link navigate="/organizations" class="text-sm text-gray-600 hover:underline">
+      ← Back to organizations
+    </.link>
+  </div>
+</div>

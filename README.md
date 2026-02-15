@@ -1,9 +1,10 @@
-# Suchteam - Phoenix Swarm Orchestrator
+# Suchteam - Phoenix Swarm Orchestrator (SaaS Edition)
 
-A Phoenix LiveView-based orchestrator for distributed AI agents with OpenClaw integration. Built as a Phoenix-centric alternative to the TypeScript swarm-conductor.
+A Phoenix LiveView-based orchestrator for distributed AI agents with OpenClaw integration. Built as a Phoenix-centric alternative to the TypeScript swarm-conductor, now with multi-tenant SaaS capabilities.
 
 ## Features
 
+### Core Features
 - **Live Dashboard** - Real-time stats, agent status, OpenClaw connection
 - **Agent Management** - Create, monitor, and terminate master/sub agents
 - **Task Queue** - Oban-powered async task execution with priorities
@@ -11,6 +12,15 @@ A Phoenix LiveView-based orchestrator for distributed AI agents with OpenClaw in
 - **Real-time Updates** - Phoenix Channels + PubSub for instant sync
 - **REST API** - Full CRUD API for agents, tasks, health checks
 - **File Browser** - Browse local project files in the chat interface
+
+### SaaS Features
+- **User Authentication** - Secure login/registration with bcrypt password hashing
+- **Multi-Tenancy** - Organization-based isolation for hundreds of users
+- **Subscription Management** - Free, Pro, and Enterprise plans with usage limits
+- **API Key Management** - Secure API keys per organization
+- **Usage Tracking** - Track API calls, tasks, and agent hours
+- **Rate Limiting** - Subscription-based limits on API usage
+- **Billing Ready** - Stripe integration structure for payments
 
 ## Architecture
 
@@ -293,6 +303,54 @@ mix ecto.create
 mix ecto.migrate
 mix ecto.reset  # Drop, create, migrate, seed
 ```
+
+## SaaS Features
+
+### Authentication & Multi-Tenancy
+
+Suchteam now supports multiple users and organizations with secure authentication:
+
+1. **User Registration**: Users create accounts with email/password
+2. **Organizations**: Each user can create/join multiple organizations
+3. **Team Isolation**: Teams belong to organizations, ensuring data isolation
+4. **Role-Based Access**: Owner, Admin, and Member roles per organization
+
+### Subscription Plans
+
+| Plan | Max Agents | Max Tasks/Day | API Calls/Hour | Features |
+|------|-----------|---------------|----------------|----------|
+| **Free** | 5 | 100 | 100 | Basic agents, Web interface |
+| **Pro** | 50 | 10,000 | 1,000 | + API access, Priority support |
+| **Enterprise** | Unlimited | Unlimited | Unlimited | + SLA, Custom integrations |
+
+### API Authentication
+
+All API requests require authentication via API keys:
+
+```bash
+# Create an API key in the organization dashboard
+# Use it in requests:
+curl -H "Authorization: Bearer sk_live_..." \
+  http://localhost:4000/api/agents
+```
+
+### Usage Tracking
+
+The system tracks:
+- **API Calls**: Number of API requests per hour
+- **Task Count**: Number of tasks executed per day
+- **Agent Hours**: Total agent runtime hours
+
+View usage in your organization dashboard at `/organizations/:id`
+
+### Rate Limiting
+
+Subscription-based rate limiting enforces plan limits:
+- Free tier: 100 API calls/hour
+- Pro tier: 1,000 API calls/hour
+- Enterprise: No limits
+
+Exceeded limits return HTTP 403 with upgrade instructions.
 
 ## Comparison with TypeScript Version
 
