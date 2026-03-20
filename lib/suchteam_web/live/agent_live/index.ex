@@ -20,6 +20,10 @@ defmodule SuchteamWeb.AgentLive.Index do
   defp apply_action(socket, :new, _params), do: assign(socket, :creating, true)
 
   @impl true
+  def handle_event("show_create", _, socket) do
+    {:noreply, assign(socket, :creating, true)}
+  end
+
   def handle_event("create_agent", %{"type" => type}, socket) do
     team_id = generate_team_id()
 
@@ -122,14 +126,14 @@ defmodule SuchteamWeb.AgentLive.Index do
             </thead>
             <tbody>
               <tr :for={agent <- @agents} class="border-b border-gray-700/50 hover:bg-gray-700/30">
-                <td class="p-4 font-mono text-sm"><%= short_id(agent.id) %></td>
+                <td class="p-4 font-mono text-sm">{short_id(agent.id)}</td>
                 <td class="p-4">
                   <span class={[
                     "px-2 py-1 rounded text-xs font-medium uppercase",
                     agent.type == "master" && "bg-purple-500/20 text-purple-400",
                     agent.type == "sub" && "bg-indigo-500/20 text-indigo-400"
                   ]}>
-                    <%= agent.type %>
+                    {agent.type}
                   </span>
                 </td>
                 <td class="p-4">
@@ -139,12 +143,12 @@ defmodule SuchteamWeb.AgentLive.Index do
                     agent.status == "idle" && "bg-yellow-500/20 text-yellow-400",
                     agent.status == "terminated" && "bg-red-500/20 text-red-400"
                   ]}>
-                    <%= agent.status %>
+                    {agent.status}
                   </span>
                 </td>
-                <td class="p-4 font-mono text-sm text-gray-400"><%= agent.session_key %></td>
+                <td class="p-4 font-mono text-sm text-gray-400">{agent.session_key}</td>
                 <td class="p-4 text-sm text-gray-400">
-                  <%= format_datetime(agent.last_ping_at) %>
+                  {format_datetime(agent.last_ping_at)}
                 </td>
                 <td class="p-4">
                   <div class="flex gap-2">
