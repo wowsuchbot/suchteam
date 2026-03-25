@@ -48,6 +48,13 @@ A Phoenix LiveView-based orchestrator for distributed AI agents with OpenClaw in
 - Elixir 1.14+
 - PostgreSQL 16 (via Docker recommended)
 - Node.js 18+ (for asset building)
+
+## Recent Updates
+
+### March 25, 2026
+- **Webhook Service**: Fixed webhook processing to properly handle Farcaster mentions and replies
+- **Image Pipeline**: Improved image generation and glitch service integration
+- **Documentation**: Initial review and setup of codebase
 - Docker (for PostgreSQL)
 
 ### Installation
